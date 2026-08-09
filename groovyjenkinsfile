@@ -13,7 +13,7 @@ pipeline {
 
     stages {
 
-        stage('Clone') {
+        stage('clone') {
             steps {
                 cloneRepo(
                     'main',
@@ -23,7 +23,7 @@ pipeline {
             }
         }
 
-        stage('Build Docker Image') {
+        stage('buildDockerImage') {
             steps {
                 buildDockerImage(
                     env.APP_PATH,
@@ -33,13 +33,13 @@ pipeline {
             }
         }
 
-        stage('Docker Hub Login') {
+        stage('dockerLogin') {
             steps {
                 dockerLogin('dockerhub-cred')
             }
         }
 
-        stage('Push Docker Image') {
+        stage('pushDockerImage') {
             steps {
                 pushDockerImage(
                     env.IMAGE_NAME,
