@@ -1,7 +1,7 @@
 pipeline {
     agent {label "agent-1"}
     environment {
-        APP_PATH = "/home/ubuntu/workspace/git-pipeline"
+        APP_PATH = "/home/ubuntu/workspace/git+dockerbuild-pipeline"
         IMAGE_NAME = "ashok7507/nginx-app"
         IMAGE_TAG = "latest"
     }
