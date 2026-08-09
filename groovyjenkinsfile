@@ -15,7 +15,7 @@ pipeline {
 
         stage('clone') {
             steps {
-                cloneRepo(
+                clone(
                     'main',
                     'https://github.com/ashok7507/demo.git',
                     'github-cred'
