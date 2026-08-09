@@ -1,44 +1,50 @@
+@Library('shared') _
+
 pipeline {
-    agent {label "agent-1"}
+    agent {
+        label 'agent-1'
+    }
+
     environment {
-        APP_PATH = "/home/ubuntu/workspace/git-pipeline"
+        APP_PATH   = "/home/ubuntu/workspace/git-pipeline"
         IMAGE_NAME = "ashok7507/nginx-app"
-        IMAGE_TAG = "latest"
+        IMAGE_TAG  = "latest"
     }
 
     stages {
-        stage('Clone') {
+
+        stage('clone') {
             steps {
-                echo "cloning project from github to jenkins-server"
-                git branch: 'main',
-                credentialsId: 'github-cred',
-                    url: 'https://github.com/ashok7507/demo.git'
-                    echo "sucessfully cloning repo"
+                cloneRepo(
+                    'main',
+                    'https://github.com/ashok7507/demo.git',
+                    'github-cred'
+                )
             }
         }
 
-        stage('Build Docker Image') {
+        stage('buildDockerImage') {
             steps {
-                dir("${APP_PATH}") {
-                    sh "docker build -t ${IMAGE_NAME}:${IMAGE_TAG} ."
-                }
+                buildDockerImage(
+                    env.APP_PATH,
+                    env.IMAGE_NAME,
+                    env.IMAGE_TAG
+                )
             }
         }
 
-        stage('Docker Hub Login') {
+        stage('dockerLogin') {
             steps {
-                withCredentials([usernamePassword(
-                    credentialsId: 'dockerhub-cred',
-                    usernameVariable: 'DOCKER_USERNAME',
-                    passwordVariable: 'DOCKER_PASSWORD'
-                )]){
-                sh " docker login -u ${env.DOCKER_USERNAME} -p ${env.DOCKER_PASSWORD} "
-               }
+                dockerLogin('dockerhub-cred')
             }
         }
-        stage('Push Docker Image') {
+
+        stage('pushDockerImage') {
             steps {
-                sh "docker push ${IMAGE_NAME}:${IMAGE_TAG}"
+                pushDockerImage(
+                    env.IMAGE_NAME,
+                    env.IMAGE_TAG
+                )
             }
         }
     }
