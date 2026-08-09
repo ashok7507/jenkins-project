@@ -1,7 +1,7 @@
 pipeline {
     agent { label "agent-1" }
 
-    environment {
+    environment { 
         IMAGE_NAME = "ashok7507/nginx-app"
         IMAGE_TAG  = "${BUILD_NUMBER}"
         K8S_CONTEXT = "kind-tws-cluster"
