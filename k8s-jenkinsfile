@@ -1,12 +1,12 @@
 pipeline {
     agent { label "agent-1" }
 
-    environment {
+    environment { 
         IMAGE_NAME = "ashok7507/nginx-app"
         IMAGE_TAG  = "${BUILD_NUMBER}"
         K8S_CONTEXT = "kind-tws-cluster"
-        K8S_DEPLOYMENT = "nginx-app"
-        K8S_CONTAINER = "nginx-app"
+        K8S_DEPLOYMENT = "nginx-deployment"
+        K8S_CONTAINER = "nginx"
     }
 
     stages {
@@ -88,8 +88,8 @@ pipeline {
                 sh '''
                     kubectl config use-context ${K8S_CONTEXT}
 
-                    kubectl apply -f k8s/deployment.yaml
-                    kubectl apply -f k8s/service.yaml
+                    kubectl apply -f deployment.yaml
+                    kubectl apply -f service.yaml
 
                     kubectl set image deployment/${K8S_DEPLOYMENT} \
                         ${K8S_CONTAINER}=${IMAGE_NAME}:${IMAGE_TAG}
