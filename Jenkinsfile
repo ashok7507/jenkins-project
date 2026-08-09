@@ -5,8 +5,8 @@ pipeline {
         IMAGE_NAME = "ashok7507/nginx-app"
         IMAGE_TAG  = "${BUILD_NUMBER}"
         K8S_CONTEXT = "kind-tws-cluster"
-        K8S_DEPLOYMENT = "nginx-app"
-        K8S_CONTAINER = "nginx-app"
+        K8S_DEPLOYMENT = "nginx-deployment"
+        K8S_CONTAINER = "nginx"
     }
 
     stages {
