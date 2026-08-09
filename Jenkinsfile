@@ -1,50 +1,44 @@
-@Library('shared') _
-
 pipeline {
-    agent {
-        label 'agent-1'
-    }
-
+    agent {label "agent-1"}
     environment {
-        APP_PATH   = "/home/ubuntu/workspace/git-pipeline"
+        APP_PATH = "/home/ubuntu/workspace/git-pipeline"
         IMAGE_NAME = "ashok7507/nginx-app"
-        IMAGE_TAG  = "latest"
+        IMAGE_TAG = "latest"
     }
 
     stages {
-
-        stage('clone') {
+        stage('Clone') {
             steps {
-                cloneRepo(
-                    'main',
-                    'https://github.com/ashok7507/demo.git',
-                    'github-cred'
-                )
+                echo "cloning project from github to jenkins-server"
+                git branch: 'main',
+                credentialsId: 'github-cred',
+                    url: 'https://github.com/ashok7507/demo.git'
+                    echo "sucessfully cloning repo"
             }
         }
 
-        stage('buildDockerImage') {
+        stage('Build Docker Image') {
             steps {
-                buildDockerImage(
-                    env.APP_PATH,
-                    env.IMAGE_NAME,
-                    env.IMAGE_TAG
-                )
+                dir("${APP_PATH}") {
+                    sh "docker build -t ${IMAGE_NAME}:${IMAGE_TAG} ."
+                }
             }
         }
 
-        stage('dockerLogin') {
+        stage('Docker Hub Login') {
             steps {
-                dockerLogin('dockerhub-cred')
+                withCredentials([usernamePassword(
+                    credentialsId: 'dockerhub-cred',
+                    usernameVariable: 'DOCKER_USERNAME',
+                    passwordVariable: 'DOCKER_PASSWORD'
+                )]){
+                sh " docker login -u ${env.DOCKER_USERNAME} -p ${env.DOCKER_PASSWORD} "
+               }
             }
         }
-
-        stage('pushDockerImage') {
+        stage('Push Docker Image') {
             steps {
-                pushDockerImage(
-                    env.IMAGE_NAME,
-                    env.IMAGE_TAG
-                )
+                sh "docker push ${IMAGE_NAME}:${IMAGE_TAG}"
             }
         }
     }
