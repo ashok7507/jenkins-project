@@ -88,8 +88,8 @@ pipeline {
                 sh '''
                     kubectl config use-context ${K8S_CONTEXT}
 
-                    kubectl apply -f k8s/deployment.yaml
-                    kubectl apply -f k8s/service.yaml
+                    kubectl apply -f deployment.yaml
+                    kubectl apply -f service.yaml
 
                     kubectl set image deployment/${K8S_DEPLOYMENT} \
                         ${K8S_CONTAINER}=${IMAGE_NAME}:${IMAGE_TAG}
