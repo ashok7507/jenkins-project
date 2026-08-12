@@ -3,6 +3,7 @@ pipeline {
 
     environment { 
         APP_PATH = "/home/ubuntu/workspace/demo-pipeline/"
+        APP_DATA = "/home/ubuntu/workspace/demo-pipeline/k8s/"
         IMAGE_NAME = "ashok7507/nginx-app"
         IMAGE_TAG  = "latest"
         K8S_CONTEXT = "kind-tws-cluster"
@@ -77,7 +78,7 @@ pipeline {
         stage('Deploy to Kubernetes') {
             steps {
                 echo "Deploying application to Kubernetes..."
-                 dir("${APP_PATH}") 
+                 dir("${APP_DATA}") 
                 sh '''
                     kubectl config use-context ${K8S_CONTEXT}
 
