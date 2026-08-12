@@ -77,7 +77,7 @@ pipeline {
         stage('Deploy to Kubernetes') {
             steps {
                 echo "Deploying application to Kubernetes..."
-
+                 dir("${APP_PATH}") 
                 sh '''
                     kubectl config use-context ${K8S_CONTEXT}
 
