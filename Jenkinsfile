@@ -2,7 +2,7 @@ pipeline {
     agent { label "agent-1" }
 
     environment { 
-        APP_PATH = "/home/ubuntu/workspace/jenkins-project"
+        APP_PATH = "/home/ubuntu/workspace/demo-pipeline/"
         IMAGE_NAME = "ashok7507/nginx-app"
         IMAGE_TAG  = "latest"
         K8S_CONTEXT = "kind-tws-cluster"
