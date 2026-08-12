@@ -2,7 +2,7 @@ pipeline {
     agent { label "agent-1" }
 
     environment { 
-        APP_PATH = "/home/ubuntu/workspace/demo"
+        APP_PATH = "/home/ubuntu/workspace/jenkins-project"
         IMAGE_NAME = "ashok7507/nginx-app"
         IMAGE_TAG  = "latest"
         K8S_CONTEXT = "kind-tws-cluster"
@@ -17,7 +17,7 @@ pipeline {
                 echo "cloning project from github to jenkins-server"
                 git branch: 'main',
                 credentialsId: 'github-cred',
-                    url: 'https://github.com/ashok7507/demo.git'
+                    url: 'https://github.com/ashok7507/jenkins-project.git'
                     echo "sucessfully cloning repo"
             }
         }
