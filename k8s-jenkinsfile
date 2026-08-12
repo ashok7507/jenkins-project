@@ -2,6 +2,7 @@ pipeline {
     agent { label "agent-1" }
 
     environment { 
+        APP_PATH = "/home/ubuntu/workspace/demo"
         IMAGE_NAME = "ashok7507/nginx-app"
         IMAGE_TAG  = "latest"
         K8S_CONTEXT = "kind-tws-cluster"
@@ -13,15 +14,11 @@ pipeline {
 
         stage('Clone') {
             steps {
-                echo "Cloning project from GitHub..."
-
-                git(
-                    branch: 'main',
-                    credentialsId: 'github-cred',
+                echo "cloning project from github to jenkins-server"
+                git branch: 'main',
+                credentialsId: 'github-cred',
                     url: 'https://github.com/ashok7507/demo.git'
-                )
-
-                echo "Successfully cloned repository"
+                    echo "sucessfully cloning repo"
             }
         }
 
@@ -43,13 +40,9 @@ pipeline {
 
         stage('Build Docker Image') {
             steps {
-                echo "Building Docker image..."
-
-                sh '''
-                    docker build \
-                        -t ${IMAGE_NAME}:${IMAGE_TAG} \
-                        .
-                '''
+                dir("${APP_PATH}") {
+                    sh "docker build -t ${IMAGE_NAME}:${IMAGE_TAG} ."
+                }
             }
         }
 
