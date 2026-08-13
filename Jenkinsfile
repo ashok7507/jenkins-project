@@ -78,7 +78,7 @@ pipeline {
         stage('Deploy to Kubernetes') {
             steps {
                 echo "Deploying application to Kubernetes..."
-                 dir("${APP_DATA}") 
+                 dir("${APP_DATA}") {
                 sh '''
                     kubectl config use-context ${K8S_CONTEXT}
 
@@ -91,6 +91,7 @@ pipeline {
                     kubectl rollout status deployment/${K8S_DEPLOYMENT} \
                         --timeout=120s
                 '''
+                }
             }
         }
 
