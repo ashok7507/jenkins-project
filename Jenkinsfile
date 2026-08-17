@@ -1,4 +1,4 @@
-@Library('jenkins-project.git') _
+@Library('new') _
 
 pipeline {
     agent {
