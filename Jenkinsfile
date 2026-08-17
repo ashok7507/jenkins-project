@@ -6,7 +6,7 @@ pipeline {
     }
 
     environment {
-        APP_PATH   = "/home/ubuntu/workspace/git-pipeline"
+        APP_PATH   = "/home/ubuntu/workspace/groovy"
         IMAGE_NAME = "ashok7507/nginx-app"
         IMAGE_TAG  = "latest"
     }
