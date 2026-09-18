@@ -40,7 +40,7 @@ pipeline {
 
         stage ("deployment") {
             steps {
-                dir ("${APP_LOCATION}") {
+                dir("${APP_LOCATION}") {
                 sh "kubectl apply -f deployment.yaml" 
                 }
             }
