@@ -36,22 +36,5 @@ pipeline {
                 sh "docker push ${IMAGE_NAME}:${IMAGE_TAG}"
             }
         }
-        stage('Deploy to Kubernetes') {
-            steps {
-                sh """
-                    kubectl apply -f k8s/
-                """
-            }
-        }
-
-        stage('Check Kubernetes Deployment') {
-            steps {
-                sh """
-                    kubectl get pods
-                    kubectl get deployments
-                    kubectl get services
-                """
-            }
-        }
     }
 }
