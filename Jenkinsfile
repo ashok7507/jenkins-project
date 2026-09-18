@@ -1,7 +1,7 @@
 pipeline {
     agent any
     environment {
-        APP_PATH = "/var/lib/jenkins/workspace/demo-pipeline"
+        APP_PATH = "/var/lib/jenkins/workspace/new-shared"
         IMAGE_NAME = "ashok7507/xyz-image"
         IMAGE_TAG = "latest"
     }
