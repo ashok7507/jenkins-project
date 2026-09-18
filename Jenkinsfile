@@ -1,9 +1,11 @@
 pipeline {
     agent any
     environment {
+        APP_LOCATION = "/var/lib/jenkins/workspace/full-deployment/k8s"
         APP_PATH = "/var/lib/jenkins/workspace/full-deployment/"
         IMAGE_NAME = "ashok7507/xyz-image"
         IMAGE_TAG = "latest"
+        DEPLOYMENT_FILE = "deployment.yaml"
     }
     stages {
         stage('checkout') {
@@ -34,6 +36,14 @@ pipeline {
         stage('Push Docker Image') {
             steps {
                 sh "docker push ${IMAGE_NAME}:${IMAGE_TAG}"
+            }
+        }
+
+        stage ("deployment") {
+            steps {
+                dir ("${APP_LOCATION}") {
+                sh "kubectl apply -f ${DEPLOYMENT_FILE}" 
+                }
             }
         }
     }
