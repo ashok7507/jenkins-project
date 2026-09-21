@@ -1,48 +1,50 @@
+@Library('shared') _
+
 pipeline {
-    agent { label 'agent-1' }
-    environment {
-        APP_LOCATION = "/home/ubuntu/workspace/new/k8s"
-        APP_PATH = "/home/ubuntu/workspace/new/"
-        IMAGE_NAME = "ashok7507/xyz-image"
-        IMAGE_TAG = "latest"
+    agent {
+        label 'agent-1'
     }
+
+    environment {
+        APP_PATH   = "/var/lib/jenkins/workspace/new-shared"
+        IMAGE_NAME = "ashok7507/nginx-app"
+        IMAGE_TAG  = "latest"
+    }
+
     stages {
-        stage('checkout') {
+
+        stage('clone') {
             steps {
-                git branch: "main",
-                credentialsId: "github-cred",
-                url: "https://github.com/ashok7507/jenkins-project.git"
-            }
-        }
-        stage('build') {
-            steps {  
-               dir("${APP_PATH}") {
-                   sh "docker build -t ${IMAGE_NAME}:${IMAGE_TAG} ."
-               }
-            }
-        }
-        stage('Docker Hub Login') {
-            steps {
-                withCredentials([usernamePassword(
-                    credentialsId: 'dockerhub-cred',
-                    usernameVariable: 'DOCKER_USERNAME',
-                    passwordVariable: 'DOCKER_PASSWORD'
-                )]){
-                sh " docker login -u ${env.DOCKER_USERNAME} -p ${env.DOCKER_PASSWORD} "
-               }
-            }
-        }
-        stage('Push Docker Image') {
-            steps {
-                sh "docker push ${IMAGE_NAME}:${IMAGE_TAG}"
+                clone(
+                    'main',
+                    'https://github.com/ashok7507/demo.git',
+                    'github-cred'
+                )
             }
         }
 
-        stage ("deployment") {
+        stage('buildDockerImage') {
             steps {
-                dir("${APP_LOCATION}") {
-                sh "kubectl apply -f deployment.yaml" 
-                }
+                buildDockerImage(
+                    env.APP_PATH,
+                    env.IMAGE_NAME,
+                    env.IMAGE_TAG
+                )
+            }
+        }
+
+        stage('dockerLogin') {
+            steps {
+                dockerLogin('dockerhub-cred')
+            }
+        }
+
+        stage('pushDockerImage') {
+            steps {
+                pushDockerImage(
+                    env.IMAGE_NAME,
+                    env.IMAGE_TAG
+                )
             }
         }
     }
