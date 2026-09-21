@@ -2,7 +2,7 @@ pipeline {
     agent { label 'agent-1' }
     environment {
         APP_LOCATION = "/var/lib/jenkins/workspace/full-deployment/k8s"
-        APP_PATH = "/var/lib/jenkins/workspace/demo/"
+        APP_PATH = "/home/ubuntu/workspace/demo/"
         IMAGE_NAME = "ashok7507/xyz-image"
         IMAGE_TAG = "latest"
     }
