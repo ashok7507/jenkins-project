@@ -1,8 +1,8 @@
 pipeline {
     agent { label 'agent-1' }
     environment {
-        APP_LOCATION = "/home/ubuntu/workspace/demo/k8s"
-        APP_PATH = "/home/ubuntu/workspace/demo/"
+        APP_LOCATION = "/home/ubuntu/workspace/new/k8s"
+        APP_PATH = "/home/ubuntu/workspace/new/"
         IMAGE_NAME = "ashok7507/xyz-image"
         IMAGE_TAG = "latest"
     }
