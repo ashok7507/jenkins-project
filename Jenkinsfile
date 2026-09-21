@@ -1,5 +1,5 @@
 pipeline {
-    agent any
+    agent { label 'agent-1' }
     environment {
         APP_LOCATION = "/var/lib/jenkins/workspace/full-deployment/k8s"
         APP_PATH = "/var/lib/jenkins/workspace/full-deployment/"
