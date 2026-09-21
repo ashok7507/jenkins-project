@@ -6,7 +6,7 @@ pipeline {
     }
 
     environment {
-        APP_PATH   = "/var/lib/jenkins/workspace/new-shared"
+        APP_PATH   = "/home/ubuntu/workspace/new"
         IMAGE_NAME = "ashok7507/nginx-app"
         IMAGE_TAG  = "latest"
     }
@@ -17,7 +17,7 @@ pipeline {
             steps {
                 clone(
                     'main',
-                    'https://github.com/ashok7507/demo.git',
+                    'https://github.com/ashok7507/jenkins-project.git',
                     'github-cred'
                 )
             }
