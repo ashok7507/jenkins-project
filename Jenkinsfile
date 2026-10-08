@@ -3,7 +3,7 @@ pipeline {
     environment {
         APP_LOCATION = "/home/ubuntu/workspace/demo/k8s"
         APP_PATH = "/home/ubuntu/workspace/demo"
-        IMAGE_NAME = "vivaa2711/xyz-image"
+        IMAGE_NAME = "vivaa2711/xyz-image-2"
         IMAGE_TAG = "latest"
     }
     stages {
