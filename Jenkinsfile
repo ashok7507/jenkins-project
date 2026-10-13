@@ -1,9 +1,7 @@
 @Library('shared@main') _
 
 pipeline {
-    agent {
-        label any
-    }
+    agent any
 
     environment {
         APP_PATH   = "/var/lib/jenkins/workspace/shared-pipeline"
